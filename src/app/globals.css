@@ -1,26 +1,67 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* HAURA design tokens — dark luxury palette from brand reference */
+  --color-ink: #0d0b08; /* near-black warm base */
+  --color-ink-soft: #171310; /* elevated dark surfaces */
+  --color-ink-mute: #241e18; /* borders / hairlines on dark */
+  --color-gold: #c9a86a; /* primary brand gold */
+  --color-gold-bright: #e3c98f; /* hover / highlight gold */
+  --color-champagne: #efe3c8; /* light gold text on dark */
+  --color-cream: #f2ede3; /* light section background */
+  --color-cream-soft: #faf7f0; /* light elevated surfaces */
+  --color-sand: #d8cfbe; /* borders on light */
+  --color-text-on-dark: #e9e2d4;
+  --color-text-on-dark-mute: #a89e8c;
+  --color-text-on-light: #241e18;
+  --color-text-on-light-mute: #6f6555;
+  --color-danger: #b3554d;
+  --color-success: #6f8f6a;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
+  --color-ink-mute: var(--color-ink-mute);
+  --color-gold: var(--color-gold);
+  --color-gold-bright: var(--color-gold-bright);
+  --color-champagne: var(--color-champagne);
+  --color-cream: var(--color-cream);
+  --color-cream-soft: var(--color-cream-soft);
+  --color-sand: var(--color-sand);
+  --color-on-dark: var(--color-text-on-dark);
+  --color-on-dark-mute: var(--color-text-on-dark-mute);
+  --color-on-light: var(--color-text-on-light);
+  --color-on-light-mute: var(--color-text-on-light-mute);
+  --color-danger: var(--color-danger);
+  --color-success: var(--color-success);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-cormorant);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink);
+  color: var(--color-text-on-dark);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-cormorant), ui-serif, Georgia, serif;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}
+
+/* Wide-tracked small caps used for eyebrows, nav links, buttons */
+.text-eyebrow {
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  font-weight: 500;
 }
