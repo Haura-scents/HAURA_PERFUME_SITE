@@ -4,6 +4,7 @@ import "./globals.css";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { NavBar } from "@/components/layout/NavBar";
 import { Footer } from "@/components/layout/Footer";
+import { getCartCount } from "@/lib/cart";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -26,11 +27,13 @@ export const metadata: Metadata = {
     "Exquisite fragrance compositions crafted with rare ingredients and a devotion to timeless elegance.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cartCount = await getCartCount();
+
   return (
     <html
       lang="en"
@@ -38,7 +41,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <AnnouncementBar />
-        <NavBar />
+        <NavBar cartCount={cartCount} />
         <main className="flex-1">{children}</main>
         <Footer />
       </body>

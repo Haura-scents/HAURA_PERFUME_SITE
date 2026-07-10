@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { NAV_LINKS } from "./nav-links";
 
-export function NavBar() {
+export function NavBar({ cartCount = 0 }: { cartCount?: number }) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const closeMobile = () => setMobileOpen(false);
@@ -85,10 +85,18 @@ export function NavBar() {
           </Link>
           <Link
             href="/cart"
-            className="text-eyebrow inline-flex items-center gap-2 text-on-dark transition-colors hover:text-gold-bright"
+            className="text-eyebrow relative inline-flex items-center gap-2 text-on-dark transition-colors hover:text-gold-bright"
           >
             <BagIcon />
             <span className="hidden xl:inline">Cart</span>
+            {cartCount > 0 && (
+              <span
+                aria-label={`${cartCount} items in cart`}
+                className="absolute -right-2.5 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-gold px-1 text-[0.6rem] font-semibold text-ink"
+              >
+                {cartCount > 99 ? "99+" : cartCount}
+              </span>
+            )}
           </Link>
           <button
             type="button"
