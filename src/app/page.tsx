@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container, SectionHeading } from "@/components/ui/Container";
+import { ProductGrid } from "@/components/commerce/ProductGrid";
+import { getProducts } from "@/lib/catalog";
 
 const TRUST_BADGES = [
   { title: "Complimentary Shipping", detail: "On qualifying orders" },
@@ -17,7 +19,12 @@ const CATEGORY_TILES = [
   { label: "Gifts", href: "/gifts" },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [newArrivals, bestsellers] = await Promise.all([
+    getProducts({ onlyNew: true, limit: 4 }),
+    getProducts({ onlyBestsellers: true, limit: 4 }),
+  ]);
+
   return (
     <>
       {/* Hero */}
@@ -80,20 +87,37 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* New arrivals / bestsellers placeholders — wired to live data in catalog phase */}
-      <section className="pb-20">
-        <Container>
-          <div className="flex items-end justify-between">
-            <SectionHeading eyebrow="The Edit" title="New Arrivals" />
-            <Link href="/shop" className="text-eyebrow text-gold hover:text-gold-bright">
-              View All
-            </Link>
-          </div>
-          <p className="mt-6 text-sm text-on-dark-mute">
-            Product grid coming online with the catalog.
-          </p>
-        </Container>
-      </section>
+      {newArrivals.length > 0 && (
+        <section className="pb-16">
+          <Container>
+            <div className="flex items-end justify-between">
+              <SectionHeading eyebrow="The Edit" title="New Arrivals" />
+              <Link href="/shop" className="text-eyebrow text-gold hover:text-gold-bright">
+                View All
+              </Link>
+            </div>
+            <div className="mt-8">
+              <ProductGrid products={newArrivals} />
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {bestsellers.length > 0 && (
+        <section className="pb-20">
+          <Container>
+            <div className="flex items-end justify-between">
+              <SectionHeading eyebrow="Most Loved" title="Bestsellers" />
+              <Link href="/shop" className="text-eyebrow text-gold hover:text-gold-bright">
+                View All
+              </Link>
+            </div>
+            <div className="mt-8">
+              <ProductGrid products={bestsellers} />
+            </div>
+          </Container>
+        </section>
+      )}
 
       {/* Story */}
       <section className="border-t border-ink-mute bg-ink-soft py-20">
